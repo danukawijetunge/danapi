@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../../virtualEye/danuka-vibecoding/public"
+		},
+		{
+			"path": "../../virtualEye/danuka-vibecoding/src"
+		}
+	],
+	"settings": {}
+}
