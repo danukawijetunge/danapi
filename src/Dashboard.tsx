@@ -31,12 +31,11 @@ import {
   Snackbar,
   Alert
 } from '@mui/material';
-import MenuIcon from '@mui/icons-material/Menu';
+
 import HomeIcon from '@mui/icons-material/Home';
 import SettingsIcon from '@mui/icons-material/Settings';
 import DescriptionIcon from '@mui/icons-material/Description';
 import PaymentIcon from '@mui/icons-material/Payment';
-import KeyIcon from '@mui/icons-material/VpnKey';
 import AddIcon from '@mui/icons-material/Add';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -50,8 +49,7 @@ import { useNavigate } from 'react-router-dom';
 import { createItem, getItems, updateItem, deleteItem } from './api/apiKeys';
 import type { ApiKey, ApiKeyForm } from './types/apiKey';
 import { generateRandomKey } from './utils/generateRandomKey';
-import { createClient } from '@supabase/supabase-js';
-import { supabase } from './supabaseClient';
+
 
 const drawerWidth = 240;
 
