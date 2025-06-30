@@ -146,7 +146,6 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(true);
   const [editOpen, setEditOpen] = useState(false);
   const [editForm, setEditForm] = useState<ApiKeyForm & { id: number | null }>({ id: null, keyName: '', keyType: 'development', limitUsage: false, usageLimit: '', usage: '', key: '' });
-  const [deleteId, setDeleteId] = useState<number | null>(null);
   // Add state for key visibility
   const [visibleKeys, setVisibleKeys] = useState<{ [id: number]: boolean }>({});
   const [notificationOpen, setNotificationOpen] = useState(false);
@@ -269,6 +268,8 @@ const Dashboard = () => {
   const handleToggleKeyVisibility = (id: number) => {
     setVisibleKeys((prev) => ({ ...prev, [id]: !prev[id] }));
   };
+
+  if (loading) return <div>Loading...</div>;
 
   return (
     <Box sx={{ display: 'flex', gap: 0 }}>
