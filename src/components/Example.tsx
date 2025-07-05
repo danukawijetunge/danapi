@@ -73,7 +73,7 @@ export const Example: React.FC = () => {
   }
 
   if (loading) return <div>Loading...</div>
-
+  
   return (
     <div>
       <Button variant="contained" onClick={handleOpen}>Add</Button>

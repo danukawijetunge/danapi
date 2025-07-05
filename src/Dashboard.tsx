@@ -53,65 +53,68 @@ import { generateRandomKey } from './utils/generateRandomKey';
 
 const drawerWidth = 240;
 
-const Sidebar = () => (
-  <Drawer
-    variant="permanent"
-    sx={{
-      width: drawerWidth,
-      flexShrink: 0,
-      [`& .MuiDrawer-paper`]: { width: drawerWidth, boxSizing: 'border-box', background: '#f8fafc' },
-    }}
-  >
-    <Toolbar />
-    <Box sx={{ overflow: 'auto' }}>
-      <List>
-        <ListItem disablePadding>
-          <ListItemButton selected>
-            <ListItemIcon><HomeIcon /></ListItemIcon>
-            <ListItemText primary="Overview" />
-          </ListItemButton>
-        </ListItem>
-        <ListItem disablePadding>
-          <ListItemButton>
-            <ListItemIcon><DescriptionIcon /></ListItemIcon>
-            <ListItemText primary="API Playground" />
-          </ListItemButton>
-        </ListItem>
-        <ListItem disablePadding>
-          <ListItemButton>
-            <ListItemIcon><DescriptionIcon /></ListItemIcon>
-            <ListItemText primary="Use Cases" />
-          </ListItemButton>
-        </ListItem>
-        <ListItem disablePadding>
-          <ListItemButton>
-            <ListItemIcon><PaymentIcon /></ListItemIcon>
-            <ListItemText primary="Billing" />
-          </ListItemButton>
-        </ListItem>
-        <ListItem disablePadding>
-          <ListItemButton>
-            <ListItemIcon><SettingsIcon /></ListItemIcon>
-            <ListItemText primary="Settings" />
-          </ListItemButton>
-        </ListItem>
-        <ListItem disablePadding>
-          <ListItemButton>
-            <ListItemIcon><DescriptionIcon /></ListItemIcon>
-            <ListItemText primary="Documentation" />
-          </ListItemButton>
-        </ListItem>
-      </List>
-      <Box sx={{ position: 'absolute', bottom: 16, left: 0, width: '100%', px: 2 }}>
-        <Divider />
-        <Box sx={{ display: 'flex', alignItems: 'center', mt: 2 }}>
-          <Avatar sx={{ width: 32, height: 32, mr: 1 }} src="https://randomuser.me/api/portraits/men/32.jpg" />
-          <Typography variant="body2">Danuka Geeanage Wijetunge</Typography>
+const Sidebar = () => {
+  const navigate = useNavigate();
+  return (
+    <Drawer
+      variant="permanent"
+      sx={{
+        width: drawerWidth,
+        flexShrink: 0,
+        [`& .MuiDrawer-paper`]: { width: drawerWidth, boxSizing: 'border-box', background: '#f8fafc' },
+      }}
+    >
+      <Toolbar />
+      <Box sx={{ overflow: 'auto' }}>
+        <List>
+          <ListItem disablePadding>
+            <ListItemButton selected>
+              <ListItemIcon><HomeIcon /></ListItemIcon>
+              <ListItemText primary="Overview" />
+            </ListItemButton>
+          </ListItem>
+          <ListItem disablePadding>
+            <ListItemButton onClick={() => navigate('/playground')}>
+              <ListItemIcon><DescriptionIcon /></ListItemIcon>
+              <ListItemText primary="API Playground" />
+            </ListItemButton>
+          </ListItem>
+          <ListItem disablePadding>
+            <ListItemButton>
+              <ListItemIcon><DescriptionIcon /></ListItemIcon>
+              <ListItemText primary="Use Cases" />
+            </ListItemButton>
+          </ListItem>
+          <ListItem disablePadding>
+            <ListItemButton>
+              <ListItemIcon><PaymentIcon /></ListItemIcon>
+              <ListItemText primary="Billing" />
+            </ListItemButton>
+          </ListItem>
+          <ListItem disablePadding>
+            <ListItemButton>
+              <ListItemIcon><SettingsIcon /></ListItemIcon>
+              <ListItemText primary="Settings" />
+            </ListItemButton>
+          </ListItem>
+          <ListItem disablePadding>
+            <ListItemButton>
+              <ListItemIcon><DescriptionIcon /></ListItemIcon>
+              <ListItemText primary="Documentation" />
+            </ListItemButton>
+          </ListItem>
+        </List>
+        <Box sx={{ position: 'absolute', bottom: 16, left: 0, width: '100%', px: 2 }}>
+          <Divider />
+          <Box sx={{ display: 'flex', alignItems: 'center', mt: 2 }}>
+            <Avatar sx={{ width: 32, height: 32, mr: 1 }} src="https://randomuser.me/api/portraits/men/32.jpg" />
+            <Typography variant="body2">Danuka Geeanage Wijetunge</Typography>
+          </Box>
         </Box>
       </Box>
-    </Box>
-  </Drawer>
-);
+    </Drawer>
+  );
+};
 
 const TopBar = () => {
   const navigate = useNavigate();
@@ -333,7 +336,14 @@ const Dashboard = () => {
                       endAdornment: (
                         <InputAdornment position="end">
                           <Tooltip title="Copy">
-                            <IconButton size="small"><ContentCopyIcon fontSize="small" /></IconButton>
+                            <IconButton size="small" onClick={() => {
+                              navigator.clipboard.writeText(item.key);
+                              setNotificationType('success');
+                              setNotificationMessage('API Key copied to clipboard');
+                              setNotificationOpen(true);
+                            }}>
+                              <ContentCopyIcon fontSize="small" />
+                            </IconButton>
                           </Tooltip>
                         </InputAdornment>
                       )

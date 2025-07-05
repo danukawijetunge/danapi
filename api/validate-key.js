@@ -1,0 +1,31 @@
+const { createClient } = require('@supabase/supabase-js');
+
+module.exports = async (req, res) => {
+  if (req.method !== 'POST') {
+    res.status(405).json({ error: 'Method not allowed' });
+    return;
+  }
+
+  const { apiKey } = req.body;
+  if (!apiKey) {
+    res.status(400).json({ valid: false, error: 'Missing apiKey' });
+    return;
+  }
+
+  const supabase = createClient(
+    process.env.VITE_SUPABASE_URL,
+    process.env.VITE_SUPABASE_ANON_KEY
+  );
+
+  const { data, error } = await supabase
+    .from('items')
+    .select('*')
+    .eq('key', apiKey)
+    .single();
+
+  if (error || !data) {
+    res.status(200).json({ valid: false });
+  } else {
+    res.status(200).json({ valid: true });
+  }
+}; 

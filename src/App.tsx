@@ -1,5 +1,6 @@
 import { useNavigate, Routes, Route, useLocation, Navigate } from 'react-router-dom'
 import Dashboard from './Dashboard'
+import APIPlayground from './APIPlayground'
 import './App.css'
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
       </div>
       <Routes>
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/playground" element={<APIPlayground />} />
         <Route path="/" element={<Navigate to="/dashboard" />} />
       </Routes>
     </>
