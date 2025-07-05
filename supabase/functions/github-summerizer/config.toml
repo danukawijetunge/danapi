@@ -1,0 +1,2 @@
+[functions.github-summerizer]
+verify_jwt = false 
