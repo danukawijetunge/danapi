@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Box, Card, CardContent, Typography, TextField, Button, Alert } from '@mui/material';
-import { supabase } from './supabaseClient';
+
+const EDGE_FUNCTION_URL = 'https://univxcwsaupszlyqkjfo.functions.supabase.co/validate-key';
+const EDGE_FUNCTION_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
 const APIPlayground: React.FC = () => {
   const [apiKey, setApiKey] = useState('');
@@ -12,18 +14,28 @@ const APIPlayground: React.FC = () => {
     setLoading(true);
     setResult(null);
     setMessage('');
-    const { data, error } = await supabase
-      .from('items')
-      .select('*')
-      .eq('key', apiKey)
-      .single();
-    setLoading(false);
-    if (error || !data) {
+    try {
+      const response = await fetch(EDGE_FUNCTION_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${EDGE_FUNCTION_ANON_KEY}`
+        },
+        body: JSON.stringify({ apiKey })
+      });
+      const data = await response.json();
+      setLoading(false);
+      if (data.valid) {
+        setResult('success');
+        setMessage('API Key is valid!');
+      } else {
+        setResult('error');
+        setMessage('API Key is invalid or not found.');
+      }
+    } catch (error) {
+      setLoading(false);
       setResult('error');
-      setMessage('API Key is invalid or not found.');
-    } else {
-      setResult('success');
-      setMessage('API Key is valid!');
+      setMessage('An error occurred while validating the API Key.');
     }
   };
 
@@ -40,7 +52,7 @@ const APIPlayground: React.FC = () => {
             sx={{ mb: 2 }}
           />
           <Button variant="contained" onClick={handleValidate} disabled={loading || !apiKey} fullWidth>
-            {loading ? 'Validating...' : 'Validate API Key'}
+            {loading ? 'VALIDATING...' : 'VALIDATE API KEY'}
           </Button>
           {result && (
             <Alert severity={result} sx={{ mt: 2 }}>{message}</Alert>
